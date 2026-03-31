@@ -1,5 +1,7 @@
 package com.sistemafarmacia.sistemafarmacia.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Min;
@@ -36,7 +38,7 @@ public class Medicamento {
     private Integer stockMinimo;
 
     @NotBlank(message = "La fecha de vencimiento del medicamento es obligatoria")
-    private String fechaVencimiento;
+    private LocalDate fechaVencimiento;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
@@ -76,7 +78,7 @@ public class Medicamento {
         return stockMinimo;
     }
 
-    public String getFechaVencimiento() {
+    public LocalDate getFechaVencimiento() {
         return fechaVencimiento;
     }
 
@@ -86,6 +88,46 @@ public class Medicamento {
 
     public Proveedor getProveedor() {
         return proveedor;
+    }
+    
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setPrecioCompra(Double precioCompra) {
+        this.precioCompra = precioCompra;
+    }
+
+    public void setPrecioVenta(Double precioVenta) {
+        this.precioVenta = precioVenta;
+    }
+
+    public void setStock(Integer stock) {
+        this.stock = stock;
+    }
+
+    public void setStockMinimo(Integer stockMinimo) {
+        this.stockMinimo = stockMinimo;
+    }
+
+    public void setFechaVencimiento(LocalDate fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
 }
