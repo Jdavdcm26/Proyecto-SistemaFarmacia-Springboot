@@ -28,6 +28,9 @@ public class Proveedor {
     @OneToMany(mappedBy = "proveedor")
     private List<Medicamento> medicamentos;
 
+    @OneToMany(mappedBy = "proveedor")
+    private List<Compra> compras;
+
     public Long getId() {
         return id;
     }
@@ -74,6 +77,12 @@ public class Proveedor {
 
     public void setCorreoElectronico(String correoElectronico) {
         this.correoElectronico = correoElectronico;
+    }
+    public List<Compra> getCompras() {
+        return compras;
+    }
+    public void setCompras(List<Compra> compras) {
+        this.compras = compras;
     }
 
 }
