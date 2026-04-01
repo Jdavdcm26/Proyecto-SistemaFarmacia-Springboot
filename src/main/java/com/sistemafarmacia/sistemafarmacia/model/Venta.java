@@ -21,14 +21,14 @@ public class Venta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "La fecha de la venta es obligatoria")
+    @NotNull(message = "La fecha de la venta es obligatoria")
     private LocalDate fecha;
 
     @NotNull(message = "El total de la venta es obligatorio")
     private Double total;
 
     @NotBlank(message = "El estado de la venta es obligatorio")
-     private String Estado;
+     private String estado="Pendiente";
 
      @ManyToOne
      @JoinColumn(name = "cliente_id")
@@ -55,7 +55,7 @@ public class Venta {
     }
 
     public String getEstado() {
-        return Estado;
+        return estado;
     }
 
     public Cliente getCliente() {
@@ -79,7 +79,7 @@ public class Venta {
     }
 
     public void setEstado(String estado) {
-        Estado = estado;
+        this.estado = estado;
     }
 
     public void setCliente(Cliente cliente) {

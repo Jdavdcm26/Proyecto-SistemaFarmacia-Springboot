@@ -37,7 +37,7 @@ public class Medicamento {
     @Min(value = 0, message = "El stock mínimo del medicamento no puede ser negativo")
     private Integer stockMinimo;
 
-    @NotBlank(message = "La fecha de vencimiento del medicamento es obligatoria")
+    @NotNull(message = "La fecha de vencimiento del medicamento es obligatoria")
     private LocalDate fechaVencimiento;
 
     @ManyToOne
