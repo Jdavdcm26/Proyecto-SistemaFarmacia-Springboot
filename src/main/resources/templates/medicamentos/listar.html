@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Medicamentos</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">FarmaSystem</a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link text-white" href="/categorias">Categorías</a>
+            <a class="nav-link text-white" href="/proveedores">Proveedores</a>
+            <a class="nav-link text-white" href="/medicamentos">Medicamentos</a>
+            <a class="nav-link text-white" href="/clientes">Clientes</a>
+            <a class="nav-link text-white" href="/ventas">Ventas</a>
+        </div>
+    </div>
+</nav>
+<div class="container mt-4">
+
+    <!-- Alerta stock bajo -->
+    <div th:if="${!#lists.isEmpty(alertas)}" class="alert alert-warning d-flex align-items-center mb-3">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        <span><strong th:text="${alertas.size()}"></strong> medicamento(s) con stock bajo o agotado.</span>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2><i class="bi bi-capsule"></i> Medicamentos</h2>
+        <a href="/medicamentos/nuevo" class="btn btn-success">
+            <i class="bi bi-plus-lg"></i> Nuevo Medicamento
+        </a>
+    </div>
+
+    <form method="get" th:action="@{/medicamentos}" class="d-flex gap-2 mb-3">
+        <input type="text" name="buscar" class="form-control"
+               placeholder="Buscar por nombre..." th:value="${buscar}"/>
+        <button type="submit" class="btn btn-outline-success"><i class="bi bi-search"></i></button>
+        <a href="/medicamentos" class="btn btn-outline-secondary"><i class="bi bi-x-lg"></i></a>
+    </form>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover mb-0">
+                <thead class="table-success">
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Precio Venta</th>
+                        <th>Stock</th>
+                        <th>Vence</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="med : ${medicamentos}"
+                        th:class="${med.stock <= med.stockMinimo} ? 'table-danger' : ''">
+                        <td th:text="${med.codigo}"></td>
+                        <td th:text="${med.nombre}"></td>
+                        <td th:text="${med.categoria != null ? med.categoria.nombre : '-'}"></td>
+                        <td th:text="'$' + ${med.precioVenta}"></td>
+                        <td>
+                            <span th:text="${med.stock}"
+                                  th:class="${med.stock <= med.stockMinimo} ? 'badge bg-danger' : 'badge bg-success'">
+                            </span>
+                        </td>
+                        <td th:text="${med.fechaVencimiento}"></td>
+                        <td>
+                            <a th:href="@{/medicamentos/editar/{c}(c=${med.codigo})}"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a th:href="@{/medicamentos/eliminar/{c}(c=${med.codigo})}"
+                               class="btn btn-sm btn-outline-danger"
+                               onclick="return confirm('¿Eliminar este medicamento?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(medicamentos)}">
+                        <td colspan="7" class="text-center text-muted">No hay medicamentos registrados</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
